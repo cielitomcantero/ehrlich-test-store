@@ -32,6 +32,13 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
 }
 
+h1 {
+    font-size: 36px;
+    font-weight: 800;
+    text-transform: capitalize;
+    margin-bottom: 36px;
+}
+
 h2 {
     font-size: 36px;
     font-weight: 800;
@@ -97,6 +104,12 @@ button {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+.btn-sm {
+    font-size: 14px;
+    text-transform: capitalize;
+    padding: 10px;
+}
+
 .btn-lg {
     font-size: 36px;
     padding: 15px 30px;
@@ -114,6 +127,12 @@ button {
 .site-container {
     position: relative;
     z-index: 1;
+}
+
+.container {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Swiper JS Overrides */
@@ -612,7 +631,9 @@ header {
     display: flex;
     gap: 10px;
     font-size: 12px;
+    padding-bottom: 10px;
     margin-bottom: 10px;
+    border-bottom: 1px solid #f2f2f2;
 }
 
 .cart-popup .product-image {
@@ -642,4 +663,82 @@ header {
 .cart-popup .btn {
     width: 100%;
     text-align: center;
+}
+
+/* Cart page */
+
+.container-cart {
+    padding: 20px;
+}
+
+.container-cart h1 {
+    text-align: left;
+}
+
+.container-cart .list-products--label,
+.container-cart .totals {
+    display: flex;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.container-cart .list-products--label {
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.container-cart .col-image,
+.container-cart .col-item,
+.container-cart .col-quantity,
+.container-cart .col-price,
+.container-cart .col-subtotal {
+    padding: 0 10px;
+}
+
+.container-cart .col-image {
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%;
+}
+
+.container-cart .col-quantity,
+.container-cart .col-price,
+.container-cart .col-subtotal {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+}
+
+.container-cart .col-item {
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%;
+}
+
+.container-cart .product {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.container-cart .product .btn-remove {
+    margin-top: 10px;
+}
+
+.container-cart .totals {
+    margin: 10px 0;
+}
+
+.container-cart .totals .label,
+.container-cart .totals .amount {
+    padding: 0 10px;
+}
+
+.container-cart .totals .label {
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+}
+
+.container-cart .totals .amount {
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
 }

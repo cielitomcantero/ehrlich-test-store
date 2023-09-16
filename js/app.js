@@ -1,3 +1,4 @@
+// Test data for list of categories
 const categories = [
     {
         'name': 'Winter Fashion',
@@ -41,6 +42,7 @@ const categories = [
     }
 ];
 
+// Test data for list of products
 const products = [
     {
         'id': 1,
@@ -87,6 +89,7 @@ const products = [
     }
 ];
 
+// Test data for list of posts
 const posts = [
     {
         'image': 'images/post/post-1.jpg',
@@ -110,8 +113,9 @@ const posts = [
     }
 ];
 
+// Init app
 const initApp = () => {
-    // Slider
+    // Initialize swiper slider
     const sliderEl = document.getElementById('home-slider');
     if (sliderEl) {
         const homeSlider = new Swiper(sliderEl, {
@@ -128,7 +132,7 @@ const initApp = () => {
         });
     }
 
-    // Categories
+    // Populate categories list
     const categoriesEl = document.querySelector('.container-trending .list-category');
     if (categories?.length && categoriesEl) {
         let categoriesHtml = '';
@@ -146,7 +150,7 @@ const initApp = () => {
         categoriesEl.innerHTML = categoriesHtml;
     }
 
-    // Products
+    // Populate products list
     const productsEl = document.querySelector('.container-recent-products .list-products');
     if (products?.length && productsEl) {
         let productsHtml = '';
@@ -192,13 +196,15 @@ const initApp = () => {
                     } else {
                         const productId = productEl.dataset.id;
                         Cart.addToCart(productId);
+
+                        alert('Added to cart!');
                     }
                 });
             });
         }
     }
 
-    // Posts
+    // Populate posts list
     const postsEl = document.querySelector('.container-posts .list-posts');
     if (posts?.length && postsEl) {
         let postsHtml = '';
@@ -275,7 +281,7 @@ const initApp = () => {
         });
     }
 
-    // Close cart popup when clicking outside
+    // Close cart popup when clicking outside of popup
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.cart-popup-container')) {
             const cartPopupEl = document.querySelector('.cart-popup');
@@ -284,9 +290,103 @@ const initApp = () => {
             }
         }
     }, false);
+
+    // Populate items in cart
+    const cartPageEl = document.querySelector('.page-cart');
+    const cartListEl = document.querySelector('.page-cart .list-cart');
+    if (cartPageEl) {
+        const _populateCart = () => {
+            cartListEl.innerHTML = '';
+        
+            const _products = Cart.getCartProducts();
+            let cartListHtml = '';
+
+            if (_products?.length) {
+                let quantityTotal = 0;
+                let cartTotal = 0;
+                let cartItemsHtml = '';
+
+                _products.forEach(product => {
+                    const subTotal = product.price_final * product.quantity;
+                    quantityTotal += product.quantity;
+                    cartTotal += subTotal;
+                    cartItemsHtml += `
+                        <div class="product" data-id="${product.id}">
+                            <div class="col-image">
+                                <img src="${product.image}">
+                            </div>
+                            <div class="col-item">
+                                <div class="product-title">${product.title}</div>
+                                <button class="btn btn-sm btn-secondary btn-remove">Remove</button>
+                            </div>
+                            <div class="col-quantity">
+                                <span class="product-quantity">${product.quantity}</span>
+                            </div>
+                            <div class="col-price">
+                                <span class="product-price">$${product.price_final}</span>
+                            </div>
+                            <div class="col-subtotal">
+                                <span class="product-subtotal">$${subTotal}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                cartTotal = parseFloat(cartTotal).toFixed(2);
+
+                cartListHtml = `
+                    <div class="list-products--label">
+                        <div class="col-image"></div>
+                        <div class="col-item">Description</div>
+                        <div class="col-quantity">Quantity</div>
+                        <div class="col-price">Price</div>
+                        <div class="col-subtotal">Subtotal</div>
+                    </div>
+                    <div class="list-products">${cartItemsHtml}</div>
+                    <div class="totals">
+                        <div class="label">Total:</div>
+                        <div class="amount">$${cartTotal}</div>
+                    </div>
+                `;
+            } else {
+                cartListHtml = `<p>Cart is empty.</p>`;
+            }
+
+            cartListEl.innerHTML = cartListHtml;
+
+            // Click event listener for "remove" button in cart
+            const removeButtons = document.querySelectorAll('.container-cart .btn-remove');
+            if (removeButtons?.length) {
+                removeButtons.forEach((btn) => {
+                    btn.addEventListener('click', (e) => {
+                        const productEl = e.target.closest('.product');
+
+                        if (!productEl) {
+                            alert('Invalid product!');
+                        } else {
+                            const confirmDelete = confirm('Are you sure you want to delete product?');
+
+                            if (confirmDelete) {
+                                const productId = productEl.dataset.id;
+                                Cart.removeFromCart(productId);
+    
+                                _populateCart();
+                                alert('Removed from cart!');
+                            }
+                        }
+                    });
+                });
+            }
+        };
+
+        _populateCart();
+    }
 }
 
+// Cart actions
 const Cart = {
+
+    // Add product to cart
     addToCart: (productId) => {
         if (!productId) return;
         
@@ -298,10 +398,9 @@ const Cart = {
         cartData[productId] += 1;
 
         LocalData.setCartData(cartData);
-
-        alert('Added to cart!');
     },
     
+    // Remove product from cart
     removeFromCart: (productId) => {
         if (!productId) return;
 
@@ -316,11 +415,14 @@ const Cart = {
             cartData[productId] = 0;
         }
 
-        LocalData.setCartData(cartData);
+        if (!cartData[productId]) {
+            delete cartData[productId];
+        }
 
-        alert('Removed from cart!');
+        LocalData.setCartData(cartData);
     },
 
+    // Generate list of products in cart with details
     getCartProducts: () => {
         const cartData = LocalData.getCartData();
         let _products = [];
@@ -340,7 +442,10 @@ const Cart = {
     }
 };
 
+// Manage data using localStorage
 const LocalData = {
+
+    // Get data from localStorage
     getCartData: () => {
         const data = localStorage.getItem('ehrlich-cart');
 
@@ -351,6 +456,7 @@ const LocalData = {
         return {};
     },
 
+    // Save data to localStorage
     setCartData: (data) => {
         localStorage.setItem('ehrlich-cart', JSON.stringify(data));
     }
