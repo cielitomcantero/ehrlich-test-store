@@ -192,6 +192,8 @@ const initApp = () => {
                     } else {
                         const productId = productEl.dataset.id;
                         Cart.addToCart(productId);
+
+                        alert('Added to cart!');
                     }
                 });
             });
@@ -284,6 +286,93 @@ const initApp = () => {
             }
         }
     }, false);
+
+    // Populate items in cart
+    const cartPageEl = document.querySelector('.page-cart');
+    const cartListEl = document.querySelector('.page-cart .list-cart');
+    if (cartPageEl) {
+        const _populateCart = () => {
+            cartListEl.innerHTML = '';
+        
+            const _products = Cart.getCartProducts();
+            let cartListHtml = '';
+
+            if (_products?.length) {
+                let quantityTotal = 0;
+                let cartTotal = 0;
+                let cartItemsHtml = '';
+
+                _products.forEach(product => {
+                    const subTotal = product.price_final * product.quantity;
+                    quantityTotal += product.quantity;
+                    cartTotal += subTotal;
+                    cartItemsHtml += `
+                        <div class="product" data-id="${product.id}">
+                            <div class="col-image">
+                                <img src="${product.image}">
+                            </div>
+                            <div class="col-item">
+                                <div class="product-title">${product.title}</div>
+                                <button class="btn btn-sm btn-secondary btn-remove">Remove</button>
+                            </div>
+                            <div class="col-quantity">
+                                <span class="product-quantity">${product.quantity}</span>
+                            </div>
+                            <div class="col-price">
+                                <span class="product-price">$${product.price_final}</span>
+                            </div>
+                            <div class="col-subtotal">
+                                <span class="product-subtotal">$${subTotal}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                cartTotal = parseFloat(cartTotal).toFixed(2);
+
+                cartListHtml = `
+                    <div class="list-products--label">
+                        <div class="col-image"></div>
+                        <div class="col-item">Description</div>
+                        <div class="col-quantity">Quantity</div>
+                        <div class="col-price">Price</div>
+                        <div class="col-subtotal">Subtotal</div>
+                    </div>
+                    <div class="list-products">${cartItemsHtml}</div>
+                    <div class="totals">
+                        <div class="label">Total:</div>
+                        <div class="amount">$${cartTotal}</div>
+                    </div>
+                `;
+            } else {
+                cartListHtml = `<p>Cart is empty.</p>`;
+            }
+
+            cartListEl.innerHTML = cartListHtml;
+
+            // Click event listener for "remove" button in cart
+            const removeButtons = document.querySelectorAll('.container-cart .btn-remove');
+            if (removeButtons?.length) {
+                removeButtons.forEach((btn) => {
+                    btn.addEventListener('click', (e) => {
+                        const productEl = e.target.closest('.product');
+
+                        if (!productEl) {
+                            alert('Invalid product!');
+                        } else {
+                            const productId = productEl.dataset.id;
+                            Cart.removeFromCart(productId);
+
+                            _populateCart();
+                            alert('Removed from cart!');
+                        }
+                    });
+                });
+            }
+        };
+
+        _populateCart();
+    }
 }
 
 const Cart = {
@@ -298,8 +387,6 @@ const Cart = {
         cartData[productId] += 1;
 
         LocalData.setCartData(cartData);
-
-        alert('Added to cart!');
     },
     
     removeFromCart: (productId) => {
@@ -316,9 +403,11 @@ const Cart = {
             cartData[productId] = 0;
         }
 
-        LocalData.setCartData(cartData);
+        if (!cartData[productId]) {
+            delete cartData[productId];
+        }
 
-        alert('Removed from cart!');
+        LocalData.setCartData(cartData);
     },
 
     getCartProducts: () => {
