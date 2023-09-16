@@ -368,3 +368,39 @@ img {
     font-weight: 600;
     margin-bottom: 43px;
 }
+
+/* Recent Products section */
+
+.container-recent-products {
+    padding: 40px 40px 51px 40px;
+}
+
+.container-recent-products .list-products {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container-recent-products .product {
+    width: 20%;
+    padding: 20px;
+}
+
+.container-recent-products .product-title {
+    display: block;
+    width: 100%;
+    color: #000;
+    text-transform: capitalize;
+    text-decoration: none;
+    margin: 6px 0;
+}
+
+.container-recent-products .product-price {
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.container-recent-products .sale-price {
+    color: #C1272D;
+    font-weight: 800;
+    margin-right: 20px;
+}
