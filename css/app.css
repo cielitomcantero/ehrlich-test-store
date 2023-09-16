@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(#000, 0);
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.5;
+    color: #000;
+    text-align: left;
+    background-color: #fff;
+}

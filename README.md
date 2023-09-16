@@ -14,6 +14,9 @@ This project is the frontend codebase for Threaded fashion store.
 
 ### Fronted libraries used ###
 
+* Fonts from Google Fonts (https://fonts.google.com/)
+* \+ custom CSS/JS
+
 ## Frontend files
 
 * `/css` - CSS files
