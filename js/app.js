@@ -1,3 +1,4 @@
+// Test data for list of categories
 const categories = [
     {
         'name': 'Winter Fashion',
@@ -41,6 +42,7 @@ const categories = [
     }
 ];
 
+// Test data for list of products
 const products = [
     {
         'id': 1,
@@ -87,6 +89,7 @@ const products = [
     }
 ];
 
+// Test data for list of posts
 const posts = [
     {
         'image': 'images/post/post-1.jpg',
@@ -110,8 +113,9 @@ const posts = [
     }
 ];
 
+// Init app
 const initApp = () => {
-    // Slider
+    // Initialize swiper slider
     const sliderEl = document.getElementById('home-slider');
     if (sliderEl) {
         const homeSlider = new Swiper(sliderEl, {
@@ -128,7 +132,7 @@ const initApp = () => {
         });
     }
 
-    // Categories
+    // Populate categories list
     const categoriesEl = document.querySelector('.container-trending .list-category');
     if (categories?.length && categoriesEl) {
         let categoriesHtml = '';
@@ -146,7 +150,7 @@ const initApp = () => {
         categoriesEl.innerHTML = categoriesHtml;
     }
 
-    // Products
+    // Populate products list
     const productsEl = document.querySelector('.container-recent-products .list-products');
     if (products?.length && productsEl) {
         let productsHtml = '';
@@ -200,7 +204,7 @@ const initApp = () => {
         }
     }
 
-    // Posts
+    // Populate posts list
     const postsEl = document.querySelector('.container-posts .list-posts');
     if (posts?.length && postsEl) {
         let postsHtml = '';
@@ -277,7 +281,7 @@ const initApp = () => {
         });
     }
 
-    // Close cart popup when clicking outside
+    // Close cart popup when clicking outside of popup
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.cart-popup-container')) {
             const cartPopupEl = document.querySelector('.cart-popup');
@@ -375,7 +379,10 @@ const initApp = () => {
     }
 }
 
+// Cart actions
 const Cart = {
+
+    // Add product to cart
     addToCart: (productId) => {
         if (!productId) return;
         
@@ -389,6 +396,7 @@ const Cart = {
         LocalData.setCartData(cartData);
     },
     
+    // Remove product from cart
     removeFromCart: (productId) => {
         if (!productId) return;
 
@@ -410,6 +418,7 @@ const Cart = {
         LocalData.setCartData(cartData);
     },
 
+    // Generate list of products in cart with details
     getCartProducts: () => {
         const cartData = LocalData.getCartData();
         let _products = [];
@@ -429,7 +438,10 @@ const Cart = {
     }
 };
 
+// Manage data using localStorage
 const LocalData = {
+
+    // Get data from localStorage
     getCartData: () => {
         const data = localStorage.getItem('ehrlich-cart');
 
@@ -440,6 +452,7 @@ const LocalData = {
         return {};
     },
 
+    // Save data to localStorage
     setCartData: (data) => {
         localStorage.setItem('ehrlich-cart', JSON.stringify(data));
     }
