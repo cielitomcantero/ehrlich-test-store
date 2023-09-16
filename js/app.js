@@ -405,19 +405,8 @@ const Cart = {
         if (!productId) return;
 
         const cartData = LocalData.getCartData();
-        if (!cartData[productId]) {
-            cartData[productId] = 0;
-        }
 
-        cartData[productId] -= 1;
-
-        if (cartData[productId] < 0) {
-            cartData[productId] = 0;
-        }
-
-        if (!cartData[productId]) {
-            delete cartData[productId];
-        }
+        delete cartData[productId];
 
         LocalData.setCartData(cartData);
     },
