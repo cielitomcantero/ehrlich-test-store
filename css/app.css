@@ -11,11 +11,122 @@ html {
 
 body {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 400;
     margin: 0;
-    line-height: 1.5;
+    line-height: normal;
     color: #000;
     text-align: left;
     background-color: #fff;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.container-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+}
+
+.nav {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.container-menu li {
+    padding: 9px 15px;
+}
+
+.container-menu a {
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.container-menu a.active {
+    font-weight: 600;
+}
+
+.container-logo img {
+    max-width: 100%;
+}
+
+.container-navigation .nav {
+    gap: 20px;
+}
+
+.container-navigation .icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container-navigation .icon-account {
+    background-image: url(../images/icons/icon-user.png);
+}
+
+.container-navigation .icon-cart {
+    background-image: url(../images/icons/icon-shopping-bag.png);
+}
+
+.container-navigation .icon-favorite {
+    background-image: url(../images/icons/icon-heart.png);
+}
+
+.container-navigation .icon-support {
+    background-image: url(../images/icons/icon-support.png);
+}
+
+.container-navigation .icon-search {
+    background-image: url(../images/icons/icon-search.png);
+}
+
+.lang-currency--selected {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 35px;
+    border: 1px solid #F2F2F2;
+    padding: 6px 12px 6px 5px;
+}
+
+.lang-currency--selected::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: url(../images/icons/icon-chevron-down.png);
+}
+
+.lang-currency--selected img {
+    width: 25px;
+    height: 25px;
+}
+
+.lang-currency--selected span {
+    margin-left: 3px;
+    margin-right: 10px;
+}
+
+.container-subheader {
+    background-color: #F2F2F2;
+    padding: 10px 39px;
+    font-size: 12px;
+}
+
+.container-subheader .nav {
+    justify-content: space-between;
+}
+
+.container-subheader .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
