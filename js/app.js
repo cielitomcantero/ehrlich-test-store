@@ -364,11 +364,15 @@ const initApp = () => {
                         if (!productEl) {
                             alert('Invalid product!');
                         } else {
-                            const productId = productEl.dataset.id;
-                            Cart.removeFromCart(productId);
+                            const confirmDelete = confirm('Are you sure you want to delete product?');
 
-                            _populateCart();
-                            alert('Removed from cart!');
+                            if (confirmDelete) {
+                                const productId = productEl.dataset.id;
+                                Cart.removeFromCart(productId);
+    
+                                _populateCart();
+                                alert('Removed from cart!');
+                            }
                         }
                     });
                 });
