@@ -107,6 +107,11 @@ input {
     color: #fff;
 }
 
+.site-container {
+    position: relative;
+    z-index: 1;
+}
+
 /* Swiper JS Overrides */
 
 .swiper-button-next:after,
@@ -123,6 +128,13 @@ input {
 }
 
 /* Header */
+
+header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
+}
 
 .container-header {
     display: flex;
@@ -210,17 +222,17 @@ input {
     margin-right: 10px;
 }
 
-.container-subheader {
+.container-benefits {
     background-color: #F2F2F2;
     padding: 10px 39px;
     font-size: 12px;
 }
 
-.container-subheader .nav {
+.container-benefits .nav {
     justify-content: space-between;
 }
 
-.container-subheader .nav-item {
+.container-benefits .nav-item {
     display: flex;
     align-items: center;
     gap: 15px;
