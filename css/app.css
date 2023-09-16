@@ -404,3 +404,25 @@ img {
     font-weight: 800;
     margin-right: 20px;
 }
+
+/* Posts section */
+
+.container-posts {
+    padding: 40px 60px 60px 60px;
+    background-color: #F2F2F2;
+}
+
+.container-posts .list-posts {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 31px 0 11px 0;
+}
+
+.container-posts .post {
+    width: 20%;
+    padding: 20px;
+}
+
+.container-posts .button-container {
+    text-align: center;
+}

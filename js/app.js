@@ -82,6 +82,29 @@ const products = [
     }
 ];
 
+const posts = [
+    {
+        'image': 'images/post/post-1.jpg',
+        'link': '#'
+    },
+    {
+        'image': 'images/post/post-2.jpg',
+        'link': '#'
+    },
+    {
+        'image': 'images/post/post-3.jpg',
+        'link': '#'
+    },
+    {
+        'image': 'images/post/post-4.jpg',
+        'link': '#'
+    },
+    {
+        'image': 'images/post/post-5.jpg',
+        'link': '#'
+    }
+];
+
 const initApp = () => {
     // Slider
     const sliderEl = document.getElementById('home-slider');
@@ -146,6 +169,23 @@ const initApp = () => {
         });
 
         productsEl.innerHTML = productsHtml;
+    }
+
+    // Posts
+    const postsEl = document.querySelector('.container-posts .list-posts');
+    if (posts?.length && postsEl) {
+        let postsHtml = '';
+        posts.forEach((post) => {
+            postsHtml += `
+                <div class="post">
+                    <a class="post-image" href="${post.link}">
+                        <img src="${post.image}">
+                    </a>
+                </div>
+            `;
+        });
+
+        postsEl.innerHTML = postsHtml;
     }
 }
 
