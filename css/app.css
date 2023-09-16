@@ -438,6 +438,7 @@ input {
 
 .container-newsletter {
     display: flex;
+    justify-content: space-between;
     background-color: #000;
     padding: 20px 118px;
 }
@@ -454,7 +455,6 @@ input {
     display: flex;
     width: 354px;
     height: 35px;
-    margin-left: 48px;
 }
 
 .container-newsletter input {
