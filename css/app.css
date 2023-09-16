@@ -202,21 +202,21 @@ ul {
     right: 268px;
 }
 
-/* Promotion section */
-.container-promotion {
+/* Deals section */
+.container-deals {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 45px 68px;
 }
 
-.container-promotion .promo {
+.container-deals .deal {
     min-width: 160px;
     text-align: center;
     text-transform: uppercase;
 }
 
-.container-promotion .discount {
+.container-deals .discount {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -224,12 +224,12 @@ ul {
     font-weight: 800;
 }
 
-.container-promotion .amount {
+.container-deals .amount {
     font-size: 32px;
     font-weight: 600;
     min-width: 69px;
 }
 
-.container-promotion .label {
+.container-deals .label {
     font-size: 10px;
 }
