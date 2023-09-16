@@ -76,6 +76,10 @@ input {
     border: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 .btn {
     color: #000;
     font-size: 18px;
@@ -221,6 +225,8 @@ header {
     margin-left: 3px;
     margin-right: 10px;
 }
+
+/* Benefits section */
 
 .container-benefits {
     background-color: #F2F2F2;
@@ -411,8 +417,28 @@ header {
 }
 
 .container-recent-products .product {
+    display: flex;
+    flex-direction: column;
     width: 20%;
     padding: 20px;
+}
+
+.container-recent-products .product-image,
+.container-recent-products .product-info {
+    height: 100%;
+}
+
+.container-recent-products .product-image img {
+    display: block;
+    width: 100%;
+}
+
+.container-recent-products .product-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    margin-top: 6px;
+    margin-bottom: 12px;
 }
 
 .container-recent-products .product-title {
@@ -421,7 +447,7 @@ header {
     color: #000;
     text-transform: capitalize;
     text-decoration: none;
-    margin: 6px 0;
+    flex: 1 1 auto;
 }
 
 .container-recent-products .product-price {
@@ -433,6 +459,10 @@ header {
     color: #C1272D;
     font-weight: 800;
     margin-right: 20px;
+}
+
+.container-recent-products button {
+    width: 100%;
 }
 
 /* Posts section */
@@ -550,4 +580,66 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 29px 70px 70px 50px;
+}
+
+/* Cart popup */
+
+.cart-popup-container {
+    position: relative;
+}
+
+.cart-popup {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.cart-popup.show {
+    display: block;
+}
+
+.cart-popup p {
+    text-align: center;
+}
+
+.cart-popup .product {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.cart-popup .product-image {
+    width: 30%;
+}
+
+.cart-popup .product-info {
+    width: 70%;
+}
+
+.cart-popup .product-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.cart-popup .product-subtotal {
+    margin-top: 6px;
+}
+
+.cart-popup .totals {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.cart-popup .btn {
+    width: 100%;
+    text-align: center;
 }

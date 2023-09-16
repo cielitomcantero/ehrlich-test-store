@@ -47,7 +47,8 @@ const products = [
         'title': 'Festive Looks Rust Red Ribbed Velvet Long Sleeve Bodysuit',
         'image': 'images/product/product-1.jpg',
         'link': '#',
-        'price': '$38'
+        'price': '$38',
+        'price_final': 38
     },
     {
         'id': 2,
@@ -55,7 +56,8 @@ const products = [
         'image': 'images/product/product-2.jpg',
         'link': '#',
         'price': '$7.34',
-        'sale_price': '$5.77'
+        'sale_price': '$5.77',
+        'price_final': 5.77
     },
     {
         'id': 3,
@@ -63,14 +65,16 @@ const products = [
         'image': 'images/product/product-3.jpg',
         'link': '#',
         'price': '$39',
-        'sale_price': '$29'
+        'sale_price': '$29',
+        'price_final': 29
     },
     {
         'id': 4,
         'title': 'Diamante Puff Sleeve Dress - Black',
         'image': 'images/product/product-4.jpg',
         'link': '#',
-        'price': '$45.99'
+        'price': '$45.99',
+        'price_final': 45.99
     },
     {
         'id': 5,
@@ -78,7 +82,8 @@ const products = [
         'image': 'images/product/product-5.jpg',
         'link': '#',
         'price': '$99.95',
-        'sale_price': '$69'
+        'sale_price': '$69',
+        'price_final': 69
     }
 ];
 
@@ -160,15 +165,37 @@ const initApp = () => {
                     <div class="product-image">
                         <img src="${product.image}">
                     </div>
-                    <a class="product-title" href="${product.link}">${product.title}</a>
-                    <div class="product-price">
-                        ${priceHtml}
+                    <div class="product-info">
+                        <a class="product-title" href="${product.link}">${product.title}</a>
+                        <div class="product-price">
+                            ${priceHtml}
+                        </div>
+                    </div>
+                    <div class="product-action">
+                        <button class="btn btn-primary">Buy</button>
                     </div>
                 </div>
             `;
         });
 
         productsEl.innerHTML = productsHtml;
+
+        // Click event listener for product "buy" button
+        const buyButtons = document.querySelectorAll('.container-recent-products button');
+        if (buyButtons?.length) {
+            buyButtons.forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const productEl = e.target.closest('.product');
+
+                    if (!productEl) {
+                        alert('Invalid product!');
+                    } else {
+                        const productId = productEl.dataset.id;
+                        Cart.addToCart(productId);
+                    }
+                });
+            });
+        }
     }
 
     // Posts
@@ -187,7 +214,147 @@ const initApp = () => {
 
         postsEl.innerHTML = postsHtml;
     }
+
+    // Open cart popup when clicking icon in header
+    const cartPopupButton = document.querySelector('.cart-popup-container a');
+    const cartPopupEl = document.querySelector('.cart-popup');
+    if (cartPopupButton) {
+        cartPopupButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            cartPopupEl.innerHTML = '';
+
+            if (cartPopupEl.classList.contains('show')) {
+                cartPopupEl.classList.remove('show');
+                return;
+            }
+
+            const _products = Cart.getCartProducts();
+            let cartPopupHtml = '';
+
+            if (_products?.length) {
+                let quantityTotal = 0;
+                let cartTotal = 0;
+                let cartItemsHtml = '';
+
+                _products.forEach(product => {
+                    const subTotal = product.price_final * product.quantity;
+                    quantityTotal += product.quantity;
+                    cartTotal += subTotal;
+                    cartItemsHtml += `
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="${product.image}">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">${product.title}</div>
+                                <div class="product-price">Price: <strong>$${product.price_final}</strong></div>
+                                <div class="product-price">Qty: <strong>${product.quantity}</strong></div>
+                                <div class="product-subtotal">Subtotal: <strong>$${subTotal}</strong></div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                cartTotal = parseFloat(cartTotal).toFixed(2);
+
+                cartPopupHtml = `
+                    <div class="list-products">${cartItemsHtml}</div>
+                    <div class="totals">
+                        <span>Total:</span>
+                        <span>$${cartTotal}</span>
+                    </div>
+                    <a href="cart.html" class="btn btn-secondary">Go to Cart</a>
+                `;
+            } else {
+                cartPopupHtml = `<p>Cart is empty.</p>`;
+            }
+
+            cartPopupEl.innerHTML = cartPopupHtml;
+            cartPopupEl.classList.add('show');
+        });
+    }
+
+    // Close cart popup when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.cart-popup-container')) {
+            const cartPopupEl = document.querySelector('.cart-popup');
+            if (cartPopupEl) {
+                cartPopupEl.classList.remove('show');
+            }
+        }
+    }, false);
 }
+
+const Cart = {
+    addToCart: (productId) => {
+        if (!productId) return;
+        
+        const cartData = LocalData.getCartData();
+        if (!cartData[productId]) {
+            cartData[productId] = 0;
+        }
+
+        cartData[productId] += 1;
+
+        LocalData.setCartData(cartData);
+
+        alert('Added to cart!');
+    },
+    
+    removeFromCart: (productId) => {
+        if (!productId) return;
+
+        const cartData = LocalData.getCartData();
+        if (!cartData[productId]) {
+            cartData[productId] = 0;
+        }
+
+        cartData[productId] -= 1;
+
+        if (cartData[productId] < 0) {
+            cartData[productId] = 0;
+        }
+
+        LocalData.setCartData(cartData);
+
+        alert('Removed from cart!');
+    },
+
+    getCartProducts: () => {
+        const cartData = LocalData.getCartData();
+        let _products = [];
+        
+        if (cartData) {
+            for (const d in cartData) {
+                const id = parseInt(d);
+                const quantity = cartData[d];
+                const product = products.find((p) => p.id == id);
+                product.quantity = quantity;
+
+                _products.push(product);
+            }
+        }
+
+        return _products;
+    }
+};
+
+const LocalData = {
+    getCartData: () => {
+        const data = localStorage.getItem('ehrlich-cart');
+
+        if (data) {
+            return JSON.parse(data);
+        }
+
+        return {};
+    },
+
+    setCartData: (data) => {
+        localStorage.setItem('ehrlich-cart', JSON.stringify(data));
+    }
+};
 
 // Init app on load
 document.addEventListener('DOMContentLoaded', initApp);
